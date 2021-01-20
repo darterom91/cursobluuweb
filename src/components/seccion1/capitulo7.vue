@@ -102,6 +102,7 @@ export default {
         this.cuenta = this.cuenta - 100;
         if(this.cuenta <= 0){
           this.cuenta = 0;
+          alert('no hay saldo!!!')
           this.dessactivar = true;
         }
       }
