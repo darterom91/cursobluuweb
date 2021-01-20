@@ -16,8 +16,8 @@
  </style>
 
  <script>
- import Capitulo1 from '@/components/seccion1/capitulo1.vue'
- import Capitulo2 from '@/components/seccion1/capitulo2.vue'
+  import Capitulo1 from '@/components/seccion1/capitulo1.vue'
+  import Capitulo2 from '@/components/seccion1/capitulo2.vue'
   import Capitulo3 from '@/components/seccion1/capitulo3.vue'
   import Capitulo4 from '@/components/seccion1/capitulo4.vue'
   import Capitulo5 from '@/components/seccion1/capitulo5.vue'
