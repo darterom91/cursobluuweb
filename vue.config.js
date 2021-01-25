@@ -1,5 +1,3 @@
 module.exports = {
-  css: {
-    modules: true
-  }
+  parallel: false
 }
