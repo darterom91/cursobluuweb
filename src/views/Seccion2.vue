@@ -2,7 +2,7 @@
   <div class="Seccion2 m-2">
     <div class="border border-dark rounded">
       <div class="bg-dark text-light p-2">
-        <h2>{{seccion}}</h2>
+        <h2>{{seccion}}:</h2>
         <h3>{{tituloSeccion}}</h3>
       </div>
       <div class="bg-light p-2">
