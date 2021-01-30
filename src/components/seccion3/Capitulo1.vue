@@ -21,7 +21,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .caja{
     border: 3px solid black;
     transition: border 1.2s, background-color 1.2s, color 1.2s;

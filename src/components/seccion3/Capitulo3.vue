@@ -1,43 +1,29 @@
 <template>
-  <div>
-    <div class="border border-dark rounded bg-dark p-2 mx-2">
-      <div class="text-light p-2 m-2">
-        <h2>{{seccion}}:</h2>
-        <h2>{{tituloSeccion}}</h2>
-      </div>
-      <div class="bg-light text-dark">
-        <Capitulo1 texto="Estoy en el blog"/>
-        <Capitulo2/>
-        <Capitulo3/>
+   <div>
+     <div class="caja p-2">
+      <h2 class="text-decoration-underline p-2">{{capitulo}}</h2>
+      <h3 class="p-3">{{tituloCap}}</h3>
+      <div class="position-relative border border-4 border-danger bg-dark m-2">
         <div class="border border-2 border-warning rounded bg-light text-dark m-3 p-3" v-for="post in arrayBlog" :key="post.id">
           <h2>ID:{{post.id}}</h2>
           <router-link :to="`/blog/${post.id}`"><h2>Titulo: {{post.title}}</h2></router-link>
         </div>
       </div>
-    </div>
-  </div>
+     </div>
+   </div>
 </template>
 
 <script>
-import Capitulo1 from '../components/seccion3/Capitulo1'
-import Capitulo2 from '../components/seccion3/Capitulo2'
-import Capitulo3 from '../components/seccion3/Capitulo3'
-
 export default {
-  components : {
-    Capitulo1,
-    Capitulo2,
-    Capitulo3
-  },
-  data() {
-    return {
-      seccion: 'Seccion 3',
-      tituloSeccion: 'Jugando con Vue-router',
-      arrayBlog: [],
-      bol: false
-    }
-  },
-  methods: {
+data() {
+  return {
+    capitulo: 'Capitulo 3',
+    tituloCap: 'Usando created()',
+    arrayBlog: [],
+    bol: false
+  }
+},
+methods: {
    async consumirApi(){
       try {
          const data = await fetch('https://jsonplaceholder.typicode.com/posts')
