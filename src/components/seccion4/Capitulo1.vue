@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="caja p-2">
-      <h2>El contador es: <span :class="[cambiarColor, vipColor]">{{contador}}</span></h2>
+      <h2>El contador es: <span :class="[cambiarColor, vipColor]" class="bg-dark">{{contador}}</span></h2>
       <button class="btn rounded bg-success p-2 m-2" @click="accionIncrementar">Incrementar</button>
       <button class="btn rounded bg-danger p-2 m-2" @click="accionDisminuir">Disminuir</button>
       <span><Boton class="d-inline"/></span>
