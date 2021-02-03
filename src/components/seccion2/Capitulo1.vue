@@ -33,5 +33,4 @@ export default {
   background-color: coral;
   border:5px solid black;
 }
-
 </style>
