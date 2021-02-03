@@ -19,6 +19,12 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    accionIncrementar({commit}){
+      commit('incrementar')
+    },
+    accionDisminuir({commit}){
+      commit('disminuir')
+    },
   },
   modules: {
   }

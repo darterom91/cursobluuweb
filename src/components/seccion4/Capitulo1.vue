@@ -1,9 +1,10 @@
 <template>
   <div>
     <div class="caja p-2">
-      <h2>El contador es: <span :class="cambiarColor">{{contador}}</span></h2>
-      <button class="btn rounded bg-success p-2 m-2" @click="incrementar">Incrementar</button>
-      <button class="btn rounded bg-danger p-2 m-2" @click="disminuir">Disminuir</button>
+      <h2>El contador es: <span :class="[cambiarColor, vipColor]">{{contador}}</span></h2>
+      <button class="btn rounded bg-success p-2 m-2" @click="accionIncrementar">Incrementar</button>
+      <button class="btn rounded bg-danger p-2 m-2" @click="accionDisminuir">Disminuir</button>
+      <span><Boton class="d-inline"/></span>
     </div>
   </div>
 </template>
@@ -11,16 +12,25 @@
 <script>
 import {mapState} from 'vuex'
 import {mapMutations} from 'vuex'
+import {mapActions} from 'vuex'
+import Boton from './Boton'
 export default {
   computed: {
     ...mapState(['contador']),
     cambiarColor(){
       return this.contador > 50 ? 'text-success': 'text-danger'
+    },
+    vipColor(){
+      return this.contador > 100 ? 'text-warning': ''
     }
   },
   methods: {
-    ...mapMutations(['incrementar', 'disminuir'])
+    ...mapMutations(['incrementar', 'disminuir']),
+    ...mapActions(['accionIncrementar', 'accionDisminuir'])
   },
+  components: {
+    Boton
+  }
 }
 </script>
 
