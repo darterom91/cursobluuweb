@@ -7,6 +7,7 @@
       </div>
       <div class="bg-light text-dark">
         <Capitulo1/>
+        <Capitulo2/>
       </div>
     </div>
   </div>
@@ -14,6 +15,7 @@
 
 <script>
 import Capitulo1 from '@/components/seccion4/Capitulo1.vue'
+import Capitulo2 from '@/components/seccion4/Capitulo2.vue'
 
 export default {
   data() {
@@ -24,6 +26,7 @@ export default {
   },
   components: {
     Capitulo1,
+    Capitulo2
   }
 }
 </script>

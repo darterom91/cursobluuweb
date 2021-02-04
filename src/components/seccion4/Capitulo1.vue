@@ -7,13 +7,14 @@
       <span><Boton class="d-inline"/></span>
     </div>
   </div>
-</template>
+</template>m
 
 <script>
 import {mapState} from 'vuex'
 import {mapMutations} from 'vuex'
 import {mapActions} from 'vuex'
 import Boton from './Boton'
+import BtnAccion from './BotonAccion'
 export default {
   computed: {
     ...mapState(['contador']),
@@ -29,7 +30,8 @@ export default {
     ...mapActions(['accionIncrementar', 'accionDisminuir'])
   },
   components: {
-    Boton
+    Boton,
+    BtnAccion
   }
 }
 </script>
