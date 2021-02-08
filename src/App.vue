@@ -6,7 +6,8 @@
       <router-link to="/seccion1">Seccion 1</router-link> |
       <router-link to="/seccion2">Seccion 2</router-link> |
       <router-link to="/blog">Blog(Seccion 3)</router-link> |
-      <router-link to="/seccion4">Seccion 4</router-link>
+      <router-link to="/seccion4">Seccion 4</router-link> |
+      <router-link to="/seccion5">Seccion 5</router-link>
     </div>
     <router-view/>
   </div>

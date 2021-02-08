@@ -23,22 +23,28 @@ const routes = [
   {
     path: '/seccion2',
     name: 'Seccion2',
-    component: () => import(/* webpackChunkName: "Seccion1" */ '../views/Seccion2.vue')
+    component: () => import(/* webpackChunkName: "Seccion2" */ '../views/Seccion2.vue')
   },
   {
     path: '/blog',
     name: 'Blog',
-    component: () => import(/* webpackChunkName: "Seccion1" */ '../views/Blog.vue')
+    component: () => import(/* webpackChunkName: "Blog" */ '../views/Blog.vue')
   },
   {
     path: '/blog/:id',
     name: 'Articulo',
-    component: () => import(/* webpackChunkName: "Seccion1" */ '../views/Articulo.vue')
+    component: () => import(/* webpackChunkName: "    name: 'Articulo',
+" */ '../views/Articulo.vue')
   },
   {
     path: '/seccion4',
     name: 'Seccion4',
-    component: () => import(/* webpackChunkName: "Seccion1" */ '../views/Seccion4.vue')
+    component: () => import(/* webpackChunkName: "Seccion4" */ '../views/Seccion4.vue')
+  },
+  {
+    path: '/seccion5',
+    name: 'Seccion5',
+    component: () => import(/* webpackChunkName: "Seccion5" */ '../views/Seccion5.vue')
   }
 ]
 
