@@ -45,6 +45,28 @@ const routes = [
     path: '/seccion5',
     name: 'Seccion5',
     component: () => import(/* webpackChunkName: "Seccion5" */ '../views/Seccion5.vue')
+  },
+  {
+    path: '/crud',
+    name: 'CRUD',
+    component: () => import(/* webpackChunkName: "CRUD" */ '../views/CRUD.vue')
+  },
+  {
+    path: '/firebasecrud',
+    name: 'FirebaseCRUD',
+    component: () => import(/* webpackChunkName: "FirebaseCRUD" */ '../views/FirebaseCRUD.vue')
+  },
+  {
+    path: '/editar/:id',
+    name: 'Editar',
+    component: () => import(/* webpackChunkName: "    name: 'Editar',
+" */ '../views/Editar.vue')
+  },
+  {
+    path: '/editarfir/:id',
+    name: 'EditarFir',
+    component: () => import(/* webpackChunkName: "    name: 'EditarFir',
+" */ '../views/EditarFir.vue')
   }
 ]
 
