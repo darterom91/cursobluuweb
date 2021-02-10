@@ -43,12 +43,13 @@ export default {
         console.log("Campo vacio")
         return
       }
-      console.log(this.tareaFir)
-      //enviar datos
-      this.setTareasFire(this.tareaFir)
       //generar id
       this.tareaFir.id = shortid.generate()
       console.log(this.tareaFir.id);
+      console.log(this.tareaFir)
+      
+      //enviar datos
+      this.setTareasFire(this.tareaFir)
       //limpiar datos
       this.tareaFir = {
         id: '',

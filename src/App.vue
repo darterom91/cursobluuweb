@@ -23,10 +23,11 @@ export default {
     NavBar
   },
   methods: {
-    ...mapActions(['cargarLocalstorage'])
+    ...mapActions(['cargarLocalstorage', 'cargarFire'])
   },
   created() {
     this.cargarLocalstorage()
+    this.cargarFire()
   },
 }
 </script>

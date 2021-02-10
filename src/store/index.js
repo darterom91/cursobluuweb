@@ -30,6 +30,10 @@ export default new Vuex.Store({
       state.tareas = payload
     },
 
+    cargarFir(state, payload){
+      state.tareasFir = payload
+    },
+
     //otra seccion
     incrementar(state){
       state.contador= state.contador + 1
@@ -104,6 +108,21 @@ export default new Vuex.Store({
       localStorage.setItem('tareas', JSON.stringify([]))
     },
 
+    async cargarFire({commit}){
+      try {
+        const res = await fetch('https://cursovue-6c2ec-default-rtdb.firebaseio.com/tareas-api.json')
+        const dataDB = await res.json()
+        const arrayTareas=[]
+        for(let id in dataDB){
+          arrayTareas.push(dataDB[id])
+        }
+        console.log(arrayTareas);
+        commit('cargarFir', arrayTareas)
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     //Otra seccion
     accionIncrementar({commit}){
       commit('incrementar')
@@ -134,15 +153,28 @@ export default new Vuex.Store({
     },
 
     //action Firebase CRUD
-    setTareasFire({commit}, tareaFir){
+    async setTareasFire({commit}, tareaFir){
       try {
+        const res = await fetch(`https://cursovue-6c2ec-default-rtdb.firebaseio.com/tareas-api/${tareaFir.id}.json`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(tareaFir)
+        })
+        const db = await res.json()
+        console.log('culo');
+        console.log(db)
         commit('addTareaFir', tareaFir)
       } catch (error) {
         console.log(error);
       }
     },
-    deleteTareasFire({commit}, id){
+    async deleteTareasFire({commit}, id){
       try {
+        await fetch(`https://cursovue-6c2ec-default-rtdb.firebaseio.com/tareas-api/${id}.json`, {
+          method: 'DELETE',
+        })
         commit('eliminarFir', id)
       } catch (error) {
         console.log(error);
@@ -155,9 +187,15 @@ export default new Vuex.Store({
         console.log(error);
       }
     },
-    setUpdateFire({commit}, tareaFir){
+    async setUpdateFire({commit}, tareaFir){
       try {
-        commit('UpdateFir', tareaFir)
+        const res= await fetch(`https://cursovue-6c2ec-default-rtdb.firebaseio.com/tareas-api/${tareaFir.id}.json`, {
+          method: 'PATCH',
+          body: JSON.stringify(tareaFir)
+        })
+        const dataDB = await res.json()
+        console.log(dataDB );
+        commit('UpdateFir', dataDB)
       } catch (error) {
         console.log(error);
       }
