@@ -37,7 +37,7 @@ export default {
     ListarTareas
   },
    methods: {
-     ...mapActions(['setTareasFire']),
+     ...mapActions(['setTareasFire', 'cargarFire']),
     procesar() {
       if (this.tareaFir.nombre.trim() === "") {
         console.log("Campo vacio")
@@ -59,7 +59,10 @@ export default {
         numero: 0
       }
     }
-  }
+  },
+  created() {
+    this.cargarFire()
+  },
 }
 </script>
 

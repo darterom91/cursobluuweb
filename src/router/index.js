@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Store  from '../store'
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -54,7 +55,8 @@ const routes = [
   {
     path: '/firebasecrud',
     name: 'FirebaseCRUD',
-    component: () => import(/* webpackChunkName: "FirebaseCRUD" */ '../views/FirebaseCRUD.vue')
+    component: () => import(/* webpackChunkName: "FirebaseCRUD" */ '../views/FirebaseCRUD.vue'),
+    meta: {rutaProtegida: true}
   },
   {
     path: '/editar/:id',
@@ -66,12 +68,34 @@ const routes = [
     path: '/editarfir/:id',
     name: 'EditarFir',
     component: () => import(/* webpackChunkName: "    name: 'EditarFir',
-" */ '../views/EditarFir.vue')
-  }
+" */ '../views/EditarFir.vue'),
+    meta: {rutaProtegida: true}
+  },
+  {
+    path: '/registro',
+    name: 'Registro',
+    component: () => import(/* webpackChunkName: "CRUD" */ '../views/Registro.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "CRUD" */ '../views/Login.vue')
+  },
 ]
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  console.log(to.meta.rutaProtegida);
+  if (to.meta.rutaProtegida) {
+    if (Store.getters.userAutenticado) {
+      next()
+    }
+  }else{
+    next()
+  }
 })
 
 export default router

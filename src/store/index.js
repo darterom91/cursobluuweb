@@ -22,7 +22,8 @@ export default new Vuex.Store({
       categorias: [],
       radio: '',
       numero: 0
-    }
+    },
+    user: null
   },
   mutations: {
     //mutation CRUD
@@ -78,6 +79,9 @@ export default new Vuex.Store({
     },
 
     // mutation Firebase Crud
+    setUser(state, payload){
+      state.user = payload
+    },
     addTareaFir(state, payload){
       state.tareasFir.push(payload)
       console.log(state.tareasFir);
@@ -108,18 +112,25 @@ export default new Vuex.Store({
       localStorage.setItem('tareas', JSON.stringify([]))
     },
 
-    async cargarFire({commit}){
+    async cargarFire({ commit, state }) {
+      if (localStorage.getItem('userLocal')) {
+        commit('setUser', JSON.parse(localStorage.getItem('userLocal')))
+      }else{
+       return commit('setUser', null)
+      }
       try {
-        const res = await fetch('https://cursovue-6c2ec-default-rtdb.firebaseio.com/tareas-api.json')
-        const dataDB = await res.json()
-        const arrayTareas=[]
-        for(let id in dataDB){
-          arrayTareas.push(dataDB[id])
+        const res = await fetch(`https://cursovue-6c2ec-default-rtdb.firebaseio.com/tareas-api/${state.user.localId}.json?auth=${state.user.idToken}`)
+        const db = await res.json()
+        const arrayDatos = []
+        for (let id in db){
+          // console.log(id)
+          // console.log(db[id])
+          arrayDatos.push(db[id])
         }
-        console.log(arrayTareas);
-        commit('cargarFir', arrayTareas)
+        console.log(arrayDatos)
+        commit('cargarFir', arrayDatos)
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
 
@@ -153,9 +164,53 @@ export default new Vuex.Store({
     },
 
     //action Firebase CRUD
-    async setTareasFire({commit}, tareaFir){
+    async registrarUsuario({ commit }, user) {
       try {
-        const res = await fetch(`https://cursovue-6c2ec-default-rtdb.firebaseio.com/tareas-api/${tareaFir.id}.json`, {
+        const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBIByCObCuXZMeHhJwSc6IdwwSHeZnJuLI`, {
+            method: 'POST',
+            body: JSON.stringify({
+                email: user.email, 
+                password: user.password,
+                returnSecureToken: true
+            })
+        })
+        const dataDB = await res.json()
+        console.log(dataDB)
+        if (dataDB.error) {
+          return console.log(dataDB.error)
+        }
+        commit('setUser', dataDB)
+        router.push('/firebasecrud')
+        localStorage.setItem('userLocal', JSON.stringify(dataDB))
+      } catch (error) {
+          console.log(error)
+      }
+    },
+    async ingresoUsuario({ commit }, usuario) {
+      try {
+        const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBIByCObCuXZMeHhJwSc6IdwwSHeZnJuLI`, {
+            method: 'POST',
+            body: JSON.stringify({
+                email: usuario.email, 
+                password: usuario.password,
+                returnSecureToken: true
+            })
+        })
+        const dataDB = await res.json()
+        console.log(dataDB)
+        if (dataDB.error) {
+          return console.log(dataDB.error)
+        }
+        commit('setUser', dataDB)
+        router.push('/firebasecrud')
+        localStorage.setItem('userLocal', JSON.stringify(dataDB))
+      } catch (error) {
+          console.log(error)
+      }
+    },
+    async setTareasFire({commit, state }, tareaFir){
+      try {
+        const res = await fetch(`https://cursovue-6c2ec-default-rtdb.firebaseio.com/tareas-api/${state.user.localId}/${tareaFir.id}.json?auth=${state.user.idToken}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -170,9 +225,9 @@ export default new Vuex.Store({
         console.log(error);
       }
     },
-    async deleteTareasFire({commit}, id){
+    async deleteTareasFire({commit, state }, id){
       try {
-        await fetch(`https://cursovue-6c2ec-default-rtdb.firebaseio.com/tareas-api/${id}.json`, {
+        await fetch(`https://cursovue-6c2ec-default-rtdb.firebaseio.com/tareas-api/${state.user.localId}/${id}.json?auth=${state.user.idToken}`, {
           method: 'DELETE',
         })
         commit('eliminarFir', id)
@@ -187,9 +242,9 @@ export default new Vuex.Store({
         console.log(error);
       }
     },
-    async setUpdateFire({commit}, tareaFir){
+    async setUpdateFire({commit, state }, tareaFir){
       try {
-        const res= await fetch(`https://cursovue-6c2ec-default-rtdb.firebaseio.com/tareas-api/${tareaFir.id}.json`, {
+        const res= await fetch(`https://cursovue-6c2ec-default-rtdb.firebaseio.com/tareas-api/${state.user.localId}/${tareaFir.id}.json?auth=${state.user.idToken}`, {
           method: 'PATCH',
           body: JSON.stringify(tareaFir)
         })
@@ -199,6 +254,16 @@ export default new Vuex.Store({
       } catch (error) {
         console.log(error);
       }
+    },
+    cerrarSesion({ commit }) {
+      commit('setUser', null)
+      router.push('/login')
+      localStorage.removeItem('userLocal')
+    }
+  },
+  getters: {
+    userAutenticado(state) {
+      return !!state.user
     }
   },
   modules: {

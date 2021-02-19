@@ -9,7 +9,8 @@
       <router-link to="/seccion4">Seccion 4</router-link> |
       <router-link to="/seccion5">Seccion 5</router-link> |
       <router-link to="/crud">CRUD(Seccion 6)</router-link> |
-      <router-link to="/firebasecrud">Firebase CRUD(Seccion 7)</router-link>
+      <router-link to="/firebasecrud">Firebase CRUD(Seccion 7)</router-link> |
+      <router-link to="/registro">registro</router-link>
     </div>
     <NavBar/>
     <router-view/>
