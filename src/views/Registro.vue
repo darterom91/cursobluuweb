@@ -1,13 +1,16 @@
 <template>
   <div class="container border border-dark p-2">
     {{bloquear}}
+    <div class="alert alert-danger" v-if="error.tipo!==null">tpo de error: [{{error.tipo}}] - [{{error.mensaje}}]</div>
     <h2>Pagina de registro</h2>
-    <form @submit.prevent="registrarUsuario({email: email, password: pass1})">
+    <form @submit.prevent="procesarFormulario">
       <input 
         type="email"
         placeholder="email"
         class="form-control border border-dark my-2"
         v-model.trim="email"
+        :class="[error.tipo === 'email' ? 'is-invalid':'']"
+
       >
       <input 
         type="password"
@@ -27,7 +30,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -45,10 +48,20 @@ export default {
         return false
       }
       return true
-    }
+    },
+    ...mapState(['error'])
   },
   methods: {
-    ...mapActions(['registrarUsuario'])
+    ...mapActions(['registrarUsuario']),
+    async procesarFormulario(){
+     await this.registrarUsuario({email: this.email, password:this.pass1})
+      if (this.error.tipo !== null) {
+        return
+      }
+      this.email = ''
+      this.pass1 = ''
+      this.pass2 = ''
+    }
   },
 }
 </script>

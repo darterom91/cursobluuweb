@@ -23,7 +23,11 @@ export default new Vuex.Store({
       radio: '',
       numero: 0
     },
-    user: null
+    user: null,
+    error: {
+      tipo: null,
+      mensaje: null 
+    }
   },
   mutations: {
     //mutation CRUD
@@ -99,6 +103,23 @@ export default new Vuex.Store({
     UpdateFir(state, payload){
       state.tareasFir = state.tareasFir.map(item => item.id === payload.id ? payload : item)
       router.push('/firebasecrud')
+    },
+    setError(state, payload){
+      if (payload === null) {
+        return state.error = {tipo: null, mensaje: null}
+      }
+      if (payload === 'EMAIL_NOT_FOUND') {
+        return state.error = {tipo:'email', mensaje:'el email no registrado'}
+      }
+      if (payload === 'EMAIL_EXISTS') {
+        return state.error = {tipo:'email', mensaje:'el email ya existe'}
+      }
+       if (payload === 'INVALID_EMAIL') {
+        return state.error = {tipo:'email', mensaje:'email mal formatado'}
+      }
+      if (payload === 'INVALID_PASSWORD') {
+        return state.error = {tipo:'password', mensaje:'Contraseña incorrecta'}
+      }
     }
   },
   actions: {
@@ -177,9 +198,11 @@ export default new Vuex.Store({
         const dataDB = await res.json()
         console.log(dataDB)
         if (dataDB.error) {
-          return console.log(dataDB.error)
+          console.log(dataDB.error)
+          return commit('setError', dataDB.error.message)
         }
         commit('setUser', dataDB)
+        commit('setError', null)
         router.push('/firebasecrud')
         localStorage.setItem('userLocal', JSON.stringify(dataDB))
       } catch (error) {
@@ -199,9 +222,11 @@ export default new Vuex.Store({
         const dataDB = await res.json()
         console.log(dataDB)
         if (dataDB.error) {
-          return console.log(dataDB.error)
+          console.log(dataDB.error)
+          return commit('setError', dataDB.error.message)
         }
         commit('setUser', dataDB)
+        commit('setError', null)
         router.push('/firebasecrud')
         localStorage.setItem('userLocal', JSON.stringify(dataDB))
       } catch (error) {
